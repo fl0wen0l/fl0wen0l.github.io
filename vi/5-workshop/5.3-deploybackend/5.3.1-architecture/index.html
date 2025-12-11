@@ -1,0 +1,458 @@
+<!doctype html><html lang=vi class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.134.3"><meta name=description content><meta name=author content="thienlh@thienlu.com"><link rel=icon href=../../../../images/favicon.png type=image/png><title>Kiến trúc chi tiết :: Báo cáo thực tập</title>
+<link href=../../../../css/nucleus.css?1765471937 rel=stylesheet><link href=../../../../css/fontawesome-all.min.css?1765471937 rel=stylesheet><link href=../../../../css/hybrid.css?1765471937 rel=stylesheet><link href=../../../../css/featherlight.min.css?1765471937 rel=stylesheet><link href=../../../../css/perfect-scrollbar.min.css?1765471937 rel=stylesheet><link href=../../../../css/auto-complete.css?1765471937 rel=stylesheet><link href=../../../../css/atom-one-dark-reasonable.css?1765471937 rel=stylesheet><link href=../../../../css/theme.css?1765471937 rel=stylesheet><link href=../../../../css/hugo-theme.css?1765471937 rel=stylesheet><link href=../../../../css/theme-workshop.css?1765471937 rel=stylesheet><script src=../../../../js/jquery-3.3.1.min.js?1765471937></script><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style></head><body data-url=../../../../vi/5-workshop/5.3-deploybackend/5.3.1-architecture/><nav id=sidebar class=showVisitedLinks><div id=header-wrapper><div id=header><a id=logo href=../../../../><svg id="Layer_1" data-name="Layer 1" viewBox="0 0 60 30" width="30%"><defs><style>.cls-1{fill:#fff}.cls-2{fill:#f90;fill-rule:evenodd}</style></defs><title>AWS-Logo_White-Color</title><path class="cls-1" d="M14.09 10.85a4.7 4.7.0 00.19 1.48 7.73 7.73.0 00.54 1.19.77.77.0 01.12.38.64.64.0 01-.32.49l-1 .7a.83.83.0 01-.44.15.69.69.0 01-.49-.23 3.8 3.8.0 01-.6-.77q-.25-.42-.51-1a6.14 6.14.0 01-4.89 2.3 4.54 4.54.0 01-3.32-1.19 4.27 4.27.0 01-1.22-3.2 4.28 4.28.0 011.46-3.4A6.06 6.06.0 017.69 6.46a12.47 12.47.0 011.76.13q.92.13 1.91.36V5.73a3.65 3.65.0 00-.79-2.66A3.81 3.81.0 007.86 2.3a7.71 7.71.0 00-1.79.22 12.78 12.78.0 00-1.79.57 4.55 4.55.0 01-.58.22h-.26q-.35.0-.35-.52V2a1.09 1.09.0 01.12-.58 1.2 1.2.0 01.47-.35A10.88 10.88.0 015.77.32 10.19 10.19.0 018.36.0a6 6 0 014.35 1.35 5.49 5.49.0 011.38 4.09zM7.34 13.38a5.36 5.36.0 001.72-.31A3.63 3.63.0 0010.63 12 2.62 2.62.0 0011.19 11a5.63 5.63.0 00.16-1.44v-.7a14.35 14.35.0 00-1.53-.28 12.37 12.37.0 00-1.56-.1 3.84 3.84.0 00-2.47.67A2.34 2.34.0 005 11a2.35 2.35.0 00.61 1.76A2.4 2.4.0 007.34 13.38zm13.35 1.8a1 1 0 01-.64-.16 1.3 1.3.0 01-.35-.65L15.81 1.51a3 3 0 01-.15-.67.36.36.0 01.41-.41H17.7a1 1 0 01.65.16 1.4 1.4.0 01.33.65l2.79 11 2.59-11A1.17 1.17.0 0124.39.6a1.1 1.1.0 01.67-.16H26.4a1.1 1.1.0 01.67.16 1.17 1.17.0 01.32.65L30 12.39 32.88 1.25A1.39 1.39.0 0133.22.6a1 1 0 01.65-.16h1.54a.36.36.0 01.41.41 1.36 1.36.0 010 .26 3.64 3.64.0 01-.12.41l-4 12.86a1.3 1.3.0 01-.35.65 1 1 0 01-.64.16H29.25a1 1 0 01-.67-.17 1.26 1.26.0 01-.32-.67L25.67 3.64l-2.56 10.7a1.26 1.26.0 01-.32.67 1 1 0 01-.67.17zm21.36.44a11.28 11.28.0 01-2.56-.29 7.44 7.44.0 01-1.92-.67 1 1 0 01-.61-.93v-.84q0-.52.38-.52a.9.9.0 01.31.06l.42.17a8.77 8.77.0 001.83.58 9.78 9.78.0 002 .2 4.48 4.48.0 002.43-.55 1.76 1.76.0 00.86-1.57 1.61 1.61.0 00-.45-1.16A4.29 4.29.0 0043 9.22l-2.41-.76A5.15 5.15.0 0138 6.78a3.94 3.94.0 01-.83-2.41 3.7 3.7.0 01.45-1.85 4.47 4.47.0 011.19-1.37 5.27 5.27.0 011.7-.86A7.4 7.4.0 0142.6.0a8.87 8.87.0 011.12.07q.57.07 1.08.19t.95.26a4.27 4.27.0 01.7.29 1.59 1.59.0 01.49.41.94.94.0 01.15.55v.79q0 .52-.38.52a1.76 1.76.0 01-.64-.2 7.74 7.74.0 00-3.2-.64 4.37 4.37.0 00-2.21.47 1.6 1.6.0 00-.79 1.48 1.58 1.58.0 00.49 1.18 4.94 4.94.0 001.83.92L44.55 7a5.08 5.08.0 012.57 1.6A3.76 3.76.0 0147.9 11a4.21 4.21.0 01-.44 1.93 4.4 4.4.0 01-1.21 1.47 5.43 5.43.0 01-1.85.93A8.25 8.25.0 0142.05 15.62z"/><path class="cls-2" d="M45.19 23.81C39.72 27.85 31.78 30 25 30A36.64 36.64.0 01.22 20.57c-.51-.46-.06-1.09.56-.74A49.78 49.78.0 0025.53 26.4 49.23 49.23.0 0044.4 22.53C45.32 22.14 46.1 23.14 45.19 23.81z"/><path class="cls-2" d="M47.47 21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74 3.13-2.2 8.27-1.57 8.86-.83s-.16 5.89-3.09 8.35c-.45.38-.88.18-.68-.32C46.69 25.8 48.17 22.11 47.47 21.21z"/></svg></a></div><div class=searchbox><label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder>
+<span data-search-clear><i class="fas fa-times"></i></span></div><script type=text/javascript src=../../../../%20js/lunr.min.js?1765471937></script><script type=text/javascript src=../../../../%20js/auto-complete.js?1765471937></script><script type=text/javascript>var baseurl="https://thienluhoan.github.io/workshop-template//vi"</script><script type=text/javascript src=../../../../%20js/search.js?1765471937></script></div><div class=highlightable><ul class=topics><li data-nav-id=/vi/1-worklog/ title=Worklog class=dd-item><a href=../../../../vi/1-worklog/><b>1. </b>Worklog
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/1-worklog/1.1-week1/ title="Worklog Tuần 1" class=dd-item><a href=../../../../vi/1-worklog/1.1-week1/><b>1.1. </b>Worklog Tuần 1
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.2-week2/ title="Worklog Tuần 2" class=dd-item><a href=../../../../vi/1-worklog/1.2-week2/><b>1.2. </b>Worklog Tuần 2
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.3-week3/ title="Worklog Tuần 3" class=dd-item><a href=../../../../vi/1-worklog/1.3-week3/><b>1.3. </b>Worklog Tuần 3
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.4-week4/ title="Worklog Tuần 4" class=dd-item><a href=../../../../vi/1-worklog/1.4-week4/><b>1.4. </b>Worklog Tuần 4
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.5-week5/ title="Worklog Tuần 5" class=dd-item><a href=../../../../vi/1-worklog/1.5-week5/><b>1.5. </b>Worklog Tuần 5
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.6-week6/ title="Worklog Tuần 6" class=dd-item><a href=../../../../vi/1-worklog/1.6-week6/><b>1.6. </b>Worklog Tuần 6
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.7-week7/ title="Worklog Tuần 7" class=dd-item><a href=../../../../vi/1-worklog/1.7-week7/><b>1.7. </b>Worklog Tuần 7
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.8-week8/ title="Worklog Tuần 8" class=dd-item><a href=../../../../vi/1-worklog/1.8-week8/><b>1.8. </b>Worklog Tuần 8
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.9-week9/ title="Worklog Tuần 9" class=dd-item><a href=../../../../vi/1-worklog/1.9-week9/><b>1.9. </b>Worklog Tuần 9
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.10-week10/ title="Worklog Tuần 10" class=dd-item><a href=../../../../vi/1-worklog/1.10-week10/><b>1.10. </b>Worklog Tuần 10
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.11-week11/ title="Worklog Tuần 11" class=dd-item><a href=../../../../vi/1-worklog/1.11-week11/><b>1.11. </b>Worklog Tuần 11
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/1-worklog/1.12-week12/ title="Worklog Tuần 12" class=dd-item><a href=../../../../vi/1-worklog/1.12-week12/><b>1.12. </b>Worklog Tuần 12
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/vi/2-proposal/ title="Bản đề xuất" class=dd-item><a href=../../../../vi/2-proposal/><b>2. </b>Bản đề xuất
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/3-blogstranslated/ title="Các bài blog đã dịch" class=dd-item><a href=../../../../vi/3-blogstranslated/><b>3. </b>Các bài blog đã dịch
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/3-blogstranslated/3.1-blog1/ title="Blog 1" class=dd-item><a href=../../../../vi/3-blogstranslated/3.1-blog1/><b>3.1. </b>Blog 1
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/3-blogstranslated/3.2-blog2/ title="Blog 2" class=dd-item><a href=../../../../vi/3-blogstranslated/3.2-blog2/><b>3.2. </b>Blog 2
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/3-blogstranslated/3.3-blog3/ title="Blog 3" class=dd-item><a href=../../../../vi/3-blogstranslated/3.3-blog3/><b>3.3. </b>Blog 3
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/vi/4-eventparticipated/ title="Sự kiện đã tham gia" class=dd-item><a href=../../../../vi/4-eventparticipated/><b>4.2. </b>Sự kiện đã tham gia
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/4-eventparticipated/4.1-event1/ title="Event 1" class=dd-item><a href=../../../../vi/4-eventparticipated/4.1-event1/><b>4.1. </b>Event 1
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/4-eventparticipated/4.2-event2/ title="Event 2" class=dd-item><a href=../../../../vi/4-eventparticipated/4.2-event2/><b>4.2. </b>Event 2
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/4-eventparticipated/4.3-event3/ title="Event 3" class=dd-item><a href=../../../../vi/4-eventparticipated/4.3-event3/><b>4.3. </b>Event 3
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/4-eventparticipated/4.4-evemt4/ title="Event 4" class=dd-item><a href=../../../../vi/4-eventparticipated/4.4-evemt4/><b>4.4. </b>Event 4
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/vi/5-workshop/ title=Workshop class="dd-item
+parent"><a href=../../../../vi/5-workshop/><b>5. </b>Workshop
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/5-workshop/5.1-workshop-overview/ title="Giới thiệu" class=dd-item><a href=../../../../vi/5-workshop/5.1-workshop-overview/><b>5.1. </b>Giới thiệu
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.2-prerequiste/ title="Các bước chuẩn bị" class=dd-item><a href=../../../../vi/5-workshop/5.2-prerequiste/><b>5.2. </b>Các bước chuẩn bị
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.3-deploybackend/ title="Triển khai Backend" class="dd-item
+parent"><a href=../../../../vi/5-workshop/5.3-deploybackend/><b>5.3. </b>Triển khai Backend
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/5-workshop/5.3-deploybackend/5.3.1-architecture/ title="Kiến trúc chi tiết" class="dd-item
+active"><a href=../../../../vi/5-workshop/5.3-deploybackend/5.3.1-architecture/><b>5.3.1. </b>Kiến trúc chi tiết
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.3-deploybackend/5.3.2-install-dependencies/ title="Cài đặt Dependencies" class=dd-item><a href=../../../../vi/5-workshop/5.3-deploybackend/5.3.2-install-dependencies/><b>5.3.2. </b>Cài đặt Dependencies
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.3-deploybackend/5.3.3-deploy-stack/ title="Triển khai Stack" class=dd-item><a href=../../../../vi/5-workshop/5.3-deploybackend/5.3.3-deploy-stack/><b>5.3.3. </b>Triển khai Stack
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.3-deploybackend/5.3.4-results/ title="Kết quả & Outputs" class=dd-item><a href=../../../../vi/5-workshop/5.3-deploybackend/5.3.4-results/><b>5.3.4. </b>Kết quả & Outputs
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/vi/5-workshop/5.4-seedingdata/ title="Tạo dữ liệu khởi tạo" class=dd-item><a href=../../../../vi/5-workshop/5.4-seedingdata/><b>5.4. </b>Tạo dữ liệu khởi tạo
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/5-workshop/5.4-seedingdata/5.4.1-setup-script/ title="Thiết lập Script" class=dd-item><a href=../../../../vi/5-workshop/5.4-seedingdata/5.4.1-setup-script/><b>5.4.1. </b>Thiết lập Script
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.4-seedingdata/5.4.2-configure-environment/ title="Cấu hình môi trường" class=dd-item><a href=../../../../vi/5-workshop/5.4-seedingdata/5.4.2-configure-environment/><b>5.4.2. </b>Cấu hình môi trường
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.4-seedingdata/5.4.3-run-script/ title="Chạy Script" class=dd-item><a href=../../../../vi/5-workshop/5.4-seedingdata/5.4.3-run-script/><b>5.4.3. </b>Chạy Script
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.4-seedingdata/5.4.4-verification/ title="Xác minh" class=dd-item><a href=../../../../vi/5-workshop/5.4-seedingdata/5.4.4-verification/><b>5.4.4. </b>Xác minh
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/vi/5-workshop/5.5-systemvalidation/ title="Kiểm tra hệ thống" class=dd-item><a href=../../../../vi/5-workshop/5.5-systemvalidation/><b>5.5. </b>Kiểm tra hệ thống
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/5-workshop/5.5-systemvalidation/5.5.1-retrieve-config/ title="Lấy cấu hình" class=dd-item><a href=../../../../vi/5-workshop/5.5-systemvalidation/5.5.1-retrieve-config/><b>5.5.1. </b>Lấy cấu hình
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.5-systemvalidation/5.5.2-test-admin-login/ title="Test đăng nhập Admin" class=dd-item><a href=../../../../vi/5-workshop/5.5-systemvalidation/5.5.2-test-admin-login/><b>5.5.2. </b>Test đăng nhập Admin
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.5-systemvalidation/5.5.3-test-create-listing/ title="Test tạo Listing" class=dd-item><a href=../../../../vi/5-workshop/5.5-systemvalidation/5.5.3-test-create-listing/><b>5.5.3. </b>Test tạo Listing
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.5-systemvalidation/5.5.4-test-public-access/ title="Test truy cập công khai" class=dd-item><a href=../../../../vi/5-workshop/5.5-systemvalidation/5.5.4-test-public-access/><b>5.5.4. </b>Test truy cập công khai
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.5-systemvalidation/5.5.5-verify-resources/ title="Xác minh tài nguyên" class=dd-item><a href=../../../../vi/5-workshop/5.5-systemvalidation/5.5.5-verify-resources/><b>5.5.5. </b>Xác minh tài nguyên
+<i class="fas fa-check read-icon"></i></a></li></ul></li><li data-nav-id=/vi/5-workshop/5.6-cleanup/ title="Dọn dẹp tài nguyên" class=dd-item><a href=../../../../vi/5-workshop/5.6-cleanup/><b>5.6. </b>Dọn dẹp tài nguyên
+<i class="fas fa-check read-icon"></i></a><ul><li data-nav-id=/vi/5-workshop/5.6-cleanup/5.6.1-destroy-stack/ title="Hủy Stack" class=dd-item><a href=../../../../vi/5-workshop/5.6-cleanup/5.6.1-destroy-stack/><b>5.6.1. </b>Hủy Stack
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.6-cleanup/5.6.2-verify-deletion/ title="Xác minh xóa tài nguyên" class=dd-item><a href=../../../../vi/5-workshop/5.6-cleanup/5.6.2-verify-deletion/><b>5.6.2. </b>Xác minh xóa tài nguyên
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/5-workshop/5.6-cleanup/5.6.3-conclusion/ title="Kết luận Workshop" class=dd-item><a href=../../../../vi/5-workshop/5.6-cleanup/5.6.3-conclusion/><b>5.6.3. </b>Kết luận Workshop
+<i class="fas fa-check read-icon"></i></a></li></ul></li></ul></li><li data-nav-id=/vi/6-self-evaluation/ title="Tự đánh giá" class=dd-item><a href=../../../../vi/6-self-evaluation/><b>6. </b>Tự đánh giá
+<i class="fas fa-check read-icon"></i></a></li><li data-nav-id=/vi/7-feedback/ title="Chia sẻ và Phản hồi" class=dd-item><a href=../../../../vi/7-feedback/><b>7. </b>Chia sẻ và Phản hồi
+<i class="fas fa-check read-icon"></i></a></li></ul><section id=shortcuts><h3>More</h3><ul><li><a class=padding href=https://www.facebook.com/groups/awsstudygroupfcj/><i class='fab fa-facebook'></i> AWS Study Group</a></li></ul></section><section id=prefooter><hr><ul><li><a class=padding><i class="fas fa-language fa-fw"></i><div class=select-style><select id=select-language onchange="location=this.value"><option id=en value=https://thienluhoan.github.io/workshop-template/5-workshop/5.3-deploybackend/5.3.1-architecture/>English</option><option id=vi value=https://thienluhoan.github.io/workshop-template/vi/5-workshop/5.3-deploybackend/5.3.1-architecture/ selected>Tiếng Việt</option></select><svg id="Capa_1" xmlns:xlink="http://www.w3.org/1999/xlink" width="255" height="255" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255"><g><g id="arrow-drop-down"><polygon points="0,63.75 127.5,191.25 255,63.75"/></g></g></svg></div></a></li><li><a class=padding href=# data-clear-history-toggle><i class="fas fa-history fa-fw"></i> Clear History</a></li></ul></section><section id=footer><left><b>Workshop</b><br><img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0" title=Migrate alt="web counter" border=0></a><br><b><a href=https://cloudjourney.awsstudygroup.com/>Cloud Journey</a></b><br><img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0" title="Total CLoud Journey" alt="web counter" border=0>
+</left><left><br><br><b>Last Updated</b><br><i><span id=lastUpdated style=color:orange></span>
+</i><script>const today=new Date,formattedDate=today.toLocaleDateString("en-GB");document.getElementById("lastUpdated").textContent=formattedDate</script></left><left><br><br><b>Team</b><br><i><a href=https://www.facebook.com/groups/660548818043427 style=color:orange>First Cloud Journey</a><br></i></left><script async defer src=https://buttons.github.io/buttons.js></script></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i>
+</a></span><span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links><a href=../../../../vi/>Báo cáo thực tập</a> > <a href=../../../../vi/5-workshop/>Workshop</a> > <a href=../../../../vi/5-workshop/5.3-deploybackend/>Triển khai Backend</a> > Kiến trúc chi tiết</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><ul><li></li></ul></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>Kiến trúc chi tiết</h1><p>Hãy cùng tìm hiểu source code <strong>BackendStack</strong> để hiểu cách hệ thống hoạt động. Dưới đây là các đoạn code chi tiết cho từng tài nguyên.</p><h4 id=1-cơ-sở-dữ-liệu-amazon-dynamodb>1. Cơ sở dữ liệu (Amazon DynamoDB)</h4><p>Chúng ta khởi tạo 6 bảng DynamoDB sử dụng chế độ <code>PAY_PER_REQUEST</code> (On-Demand) để tối ưu chi phí và khả năng mở rộng.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// 1. Listings Table (Room rentals)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>listingsTable</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>Table</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;ListingsTable&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tableName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;BoardingHouseListings&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>partitionKey</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;listingId&#34;</span>, <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span> },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>billingMode</span>: <span style=color:#66d9ef>dynamodb.BillingMode.PAY_PER_REQUEST</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 2. User Profiles Table
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>userProfilesTable</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>Table</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;UserProfilesTable&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tableName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;UserProfiles&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>partitionKey</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;userId&#34;</span>, <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span> },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>billingMode</span>: <span style=color:#66d9ef>dynamodb.BillingMode.PAY_PER_REQUEST</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 3. OTP Table (Phone Verification) - Auto-delete after 5 mins (TTL)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>otpTable</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>Table</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;OTPVerifications&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tableName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;OTPVerifications&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>partitionKey</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;phoneNumber&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>billingMode</span>: <span style=color:#66d9ef>dynamodb.BillingMode.PAY_PER_REQUEST</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>timeToLiveAttribute</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;ttl&#34;</span>, <span style=color:#75715e>// TTL configuration
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 4. Favorites Table - Includes Sort Key for quick lookup by user
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>favoritesTable</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>Table</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;FavoritesTable&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tableName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;UserFavorites&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>partitionKey</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;userId&#34;</span>, <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span> },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sortKey</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;listingId&#34;</span>, <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span> },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>billingMode</span>: <span style=color:#66d9ef>dynamodb.BillingMode.PAY_PER_REQUEST</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 5. Support Requests Table
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>supportRequestsTable</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>Table</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;SupportRequestsTable&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tableName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;SupportRequests&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>partitionKey</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;requestId&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>billingMode</span>: <span style=color:#66d9ef>dynamodb.BillingMode.PAY_PER_REQUEST</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 6. Notifications Table - Includes TTL
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>notificationsTable</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>Table</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;NotificationsTable&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tableName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Notifications&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>partitionKey</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;userId&#34;</span>, <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span> },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>sortKey</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>name</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;notificationId&#34;</span>, <span style=color:#66d9ef>type</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>dynamodb</span>.<span style=color:#a6e22e>AttributeType</span>.<span style=color:#a6e22e>STRING</span> },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>billingMode</span>: <span style=color:#66d9ef>dynamodb.BillingMode.PAY_PER_REQUEST</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>timeToLiveAttribute</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;ttl&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><h4 id=2-lưu-trữ-amazon-s3>2. Lưu trữ (Amazon S3)</h4><p>Bucket S3 được tạo để lưu trữ hình ảnh phòng, được cấu hình với bảo mật chặn truy cập công khai và tự động xóa khi stack bị hủy.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>imagesBucket</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>s3</span>.<span style=color:#a6e22e>Bucket</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;BoardingHouseImages&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>bucketName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>`findnest-images-</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>cdk</span>.<span style=color:#a6e22e>Aws</span>.<span style=color:#a6e22e>ACCOUNT_ID</span><span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>, <span style=color:#75715e>// Unique bucket name
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>autoDeleteObjects</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>blockPublicAccess</span>: <span style=color:#66d9ef>s3.BlockPublicAccess.BLOCK_ALL</span>, <span style=color:#75715e>// Private by default
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>});
+</span></span></code></pre></div><h4 id=3-xác-thực-amazon-cognito>3. Xác thực (Amazon Cognito)</h4><p>Chúng ta cấu hình User Pool để quản lý người dùng và Identity Pool để cấp quyền truy cập trực tiếp từ Frontend đến các tài nguyên AWS.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Create User Pool
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>userPool</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cognito</span>.<span style=color:#a6e22e>UserPool</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;UserPool&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>userPoolName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;FindNestUsers&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>selfSignUpEnabled</span>: <span style=color:#66d9ef>false</span>, <span style=color:#75715e>// User created via API (Backend trigger)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#a6e22e>signInAliases</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>phone</span>: <span style=color:#66d9ef>true</span>, <span style=color:#75715e>// User uses Phone Number
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>username</span>: <span style=color:#66d9ef>true</span>, <span style=color:#75715e>// Admin uses Username
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>autoVerify</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>phone</span>: <span style=color:#66d9ef>true</span> },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>standardAttributes</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>email</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>required</span>: <span style=color:#66d9ef>false</span>, <span style=color:#a6e22e>mutable</span>: <span style=color:#66d9ef>true</span> },
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>phoneNumber</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>required</span>: <span style=color:#66d9ef>false</span>, <span style=color:#a6e22e>mutable</span>: <span style=color:#66d9ef>true</span> },
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>passwordPolicy</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>minLength</span>: <span style=color:#66d9ef>8</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>requireLowercase</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>requireUppercase</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>requireDigits</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>requireSymbols</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>accountRecovery</span>: <span style=color:#66d9ef>cognito.AccountRecovery.PHONE_ONLY_WITHOUT_MFA</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>removalPolicy</span>: <span style=color:#66d9ef>RemovalPolicy.DESTROY</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Create Client App
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>userPoolClient</span> <span style=color:#f92672>=</span> <span style=color:#a6e22e>userPool</span>.<span style=color:#a6e22e>addClient</span>(<span style=color:#e6db74>&#34;UserPoolClient&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>authFlows</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>userPassword</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>adminUserPassword</span>: <span style=color:#66d9ef>true</span>, <span style=color:#75715e>// Used for Backend auth flow
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>custom</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// User Groups
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>usersGroup</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cognito</span>.<span style=color:#a6e22e>CfnUserPoolGroup</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;UsersGroup&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>userPoolId</span>: <span style=color:#66d9ef>userPool.userPoolId</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>groupName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Users&#34;</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>landlordsGroup</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cognito</span>.<span style=color:#a6e22e>CfnUserPoolGroup</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;LandlordsGroup&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>userPoolId</span>: <span style=color:#66d9ef>userPool.userPoolId</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>groupName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Landlords&#34;</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>adminsGroup</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cognito</span>.<span style=color:#a6e22e>CfnUserPoolGroup</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;AdminsGroup&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>userPoolId</span>: <span style=color:#66d9ef>userPool.userPoolId</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>groupName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Admins&#34;</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Identity Pool for Frontend
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>identityPool</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cognito</span>.<span style=color:#a6e22e>CfnIdentityPool</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;IdentityPool&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>identityPoolName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;FindNestMapAccess&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>allowUnauthenticatedIdentities</span>: <span style=color:#66d9ef>true</span>, <span style=color:#75715e>// Cho phép khách truy cập bản đồ
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#a6e22e>cognitoIdentityProviders</span><span style=color:#f92672>:</span> [
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>clientId</span>: <span style=color:#66d9ef>userPoolClient.userPoolClientId</span>,
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>providerName</span>: <span style=color:#66d9ef>userPool.userPoolProviderName</span>,
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>  ],
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// IAM Role cho người dùng chưa xác thực (chỉ truy cập bản đồ)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>unauthenticatedRole</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>Role</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;UnauthenticatedRole&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>assumedBy</span>: <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>FederatedPrincipal</span>(
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;cognito-identity.amazonaws.com&#34;</span>,
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>StringEquals</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;cognito-identity.amazonaws.com:aud&#34;</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>identityPool</span>.<span style=color:#a6e22e>ref</span>,
+</span></span><span style=display:flex><span>      },
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;ForAnyValue:StringLike&#34;</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;cognito-identity.amazonaws.com:amr&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;unauthenticated&#34;</span>,
+</span></span><span style=display:flex><span>      },
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;sts:AssumeRoleWithWebIdentity&#34;</span>
+</span></span><span style=display:flex><span>  ),
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>inlinePolicies</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>LocationServicePolicy</span>: <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyDocument</span>({
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>statements</span><span style=color:#f92672>:</span> [
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyStatement</span>({
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>effect</span>: <span style=color:#66d9ef>iam.Effect.ALLOW</span>,
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>actions</span><span style=color:#f92672>:</span> [
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:GetMap*&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:SearchPlaceIndexForText&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:SearchPlaceIndexForPosition&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:GetPlace&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:CalculateRoute&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:CalculateRouteMatrix&#34;</span>,
+</span></span><span style=display:flex><span>          ],
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>resources</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>map</span>.<span style=color:#a6e22e>attrArn</span>, <span style=color:#a6e22e>placeIndex</span>.<span style=color:#a6e22e>attrArn</span>, <span style=color:#a6e22e>routeCalculator</span>.<span style=color:#a6e22e>attrArn</span>],
+</span></span><span style=display:flex><span>        }),
+</span></span><span style=display:flex><span>      ],
+</span></span><span style=display:flex><span>    }),
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// IAM Role cho người dùng đã xác thực (truy cập đầy đủ)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>authenticatedRole</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>Role</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;AuthenticatedRole&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>assumedBy</span>: <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>FederatedPrincipal</span>(
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;cognito-identity.amazonaws.com&#34;</span>,
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>StringEquals</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;cognito-identity.amazonaws.com:aud&#34;</span><span style=color:#f92672>:</span> <span style=color:#a6e22e>identityPool</span>.<span style=color:#a6e22e>ref</span>,
+</span></span><span style=display:flex><span>      },
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;ForAnyValue:StringLike&#34;</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;cognito-identity.amazonaws.com:amr&#34;</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;authenticated&#34;</span>,
+</span></span><span style=display:flex><span>      },
+</span></span><span style=display:flex><span>    },
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;sts:AssumeRoleWithWebIdentity&#34;</span>
+</span></span><span style=display:flex><span>  ),
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>inlinePolicies</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>LocationServicePolicy</span>: <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyDocument</span>({
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>statements</span><span style=color:#f92672>:</span> [
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyStatement</span>({
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>effect</span>: <span style=color:#66d9ef>iam.Effect.ALLOW</span>,
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>actions</span><span style=color:#f92672>:</span> [
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:GetMap*&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:SearchPlaceIndexForText&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:SearchPlaceIndexForPosition&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:GetPlace&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:CalculateRoute&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:CalculateRouteMatrix&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:BatchGetDevicePosition&#34;</span>,
+</span></span><span style=display:flex><span>            <span style=color:#e6db74>&#34;geo:GetDevicePosition&#34;</span>,
+</span></span><span style=display:flex><span>          ],
+</span></span><span style=display:flex><span>          <span style=color:#a6e22e>resources</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>map</span>.<span style=color:#a6e22e>attrArn</span>, <span style=color:#a6e22e>placeIndex</span>.<span style=color:#a6e22e>attrArn</span>, <span style=color:#a6e22e>routeCalculator</span>.<span style=color:#a6e22e>attrArn</span>],
+</span></span><span style=display:flex><span>        }),
+</span></span><span style=display:flex><span>      ],
+</span></span><span style=display:flex><span>    }),
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Gắn roles vào identity pool
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cognito</span>.<span style=color:#a6e22e>CfnIdentityPoolRoleAttachment</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;IdentityPoolRoleAttachment&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>identityPoolId</span>: <span style=color:#66d9ef>identityPool.ref</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>roles</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>authenticated</span>: <span style=color:#66d9ef>authenticatedRole.roleArn</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>unauthenticated</span>: <span style=color:#66d9ef>unauthenticatedRole.roleArn</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><h4 id=4-dịch-vụ-vị-trí-maps--geocoding>4. Dịch vụ Vị trí (Maps & Geocoding)</h4><p>Khởi tạo tài nguyên Location Service sử dụng <strong>Here</strong> data provider để có độ phủ POI tốt hơn tại Việt Nam.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>placeIndex</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>location</span>.<span style=color:#a6e22e>CfnPlaceIndex</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;PlaceIndex&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>indexName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>`FindNestPlacesV3-</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>cdk</span>.<span style=color:#a6e22e>Aws</span>.<span style=color:#a6e22e>ACCOUNT_ID</span><span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>dataSource</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Here&#34;</span>, <span style=color:#75715e>// Độ phủ POI tốt hơn cho châu Á (Việt Nam)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#a6e22e>dataSourceConfiguration</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>intendedUse</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Storage&#34;</span>, <span style=color:#75715e>// Cho phép lưu trữ và truy vấn dữ liệu POI
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  },
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>map</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>location</span>.<span style=color:#a6e22e>CfnMap</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;Map&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>mapName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>`FindNestMap-</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>cdk</span>.<span style=color:#a6e22e>Aws</span>.<span style=color:#a6e22e>ACCOUNT_ID</span><span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>configuration</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>style</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;VectorEsriStreets&#34;</span> },
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>routeCalculator</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>location</span>.<span style=color:#a6e22e>CfnRouteCalculator</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>this</span>,
+</span></span><span style=display:flex><span>  <span style=color:#e6db74>&#34;RouteCalculator&#34;</span>,
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>calculatorName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>`FindNestRoutesV3-</span><span style=color:#e6db74>${</span><span style=color:#a6e22e>cdk</span>.<span style=color:#a6e22e>Aws</span>.<span style=color:#a6e22e>ACCOUNT_ID</span><span style=color:#e6db74>}</span><span style=color:#e6db74>`</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dataSource</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Here&#34;</span>,
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>);
+</span></span></code></pre></div><h4 id=5-compute-aws-lambda-monolith>5. Compute (AWS Lambda Monolith)</h4><p>Cấu hình Lambda Function chứa toàn bộ logic Backend, bao gồm injection đầy đủ các biến môi trường.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>apiLambda</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>lambda</span>.Function(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;ApiLambda&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>functionName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;FindNestApi&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>runtime</span>: <span style=color:#66d9ef>lambda.Runtime.NODEJS_20_X</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;index.handler&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>code</span>: <span style=color:#66d9ef>lambda.Code.fromAsset</span>(<span style=color:#a6e22e>path</span>.<span style=color:#a6e22e>join</span>(<span style=color:#a6e22e>__dirname</span>, <span style=color:#e6db74>&#34;../../backend/src/lambda&#34;</span>)),
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>timeout</span>: <span style=color:#66d9ef>cdk.Duration.seconds</span>(<span style=color:#ae81ff>30</span>),
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>logGroup</span>: <span style=color:#66d9ef>logGroup</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>environment</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// Environment variables connecting resources
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>LISTINGS_TABLE_NAME</span>: <span style=color:#66d9ef>listingsTable.tableName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>USER_PROFILES_TABLE_NAME</span>: <span style=color:#66d9ef>userProfilesTable.tableName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>OTP_TABLE_NAME</span>: <span style=color:#66d9ef>otpTable.tableName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>FAVORITES_TABLE_NAME</span>: <span style=color:#66d9ef>favoritesTable.tableName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>SUPPORT_REQUESTS_TABLE_NAME</span>: <span style=color:#66d9ef>supportRequestsTable.tableName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>NOTIFICATIONS_TABLE_NAME</span>: <span style=color:#66d9ef>notificationsTable.tableName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>IMAGES_BUCKET_NAME</span>: <span style=color:#66d9ef>imagesBucket.bucketName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>USER_POOL_ID</span>: <span style=color:#66d9ef>userPool.userPoolId</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>USER_POOL_CLIENT_ID</span>: <span style=color:#66d9ef>userPoolClient.userPoolClientId</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>PLACE_INDEX_NAME</span>: <span style=color:#66d9ef>placeIndex.indexName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>MAP_NAME</span>: <span style=color:#66d9ef>map.mapName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ROUTE_CALCULATOR_NAME</span>: <span style=color:#66d9ef>routeCalculator.calculatorName</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>BEDROCK_MODEL_ID</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;anthropic.claude-3-sonnet-20240229-v1:0&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>REGION</span>: <span style=color:#66d9ef>cdk.Aws.REGION</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><h4 id=6-quyền-hạn-granular-access-control>6. Quyền hạn (Granular Access Control)</h4><p>Chúng ta cấp <strong>quyền chi tiết</strong> cho Lambda Function. Dưới đây là danh sách đầy đủ các quyền được cấp:</p><p><strong>A. Quyền đọc/ghi vào Database và S3:</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#a6e22e>listingsTable</span>.<span style=color:#a6e22e>grantReadWriteData</span>(<span style=color:#a6e22e>apiLambda</span>);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>userProfilesTable</span>.<span style=color:#a6e22e>grantReadWriteData</span>(<span style=color:#a6e22e>apiLambda</span>);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>otpTable</span>.<span style=color:#a6e22e>grantReadWriteData</span>(<span style=color:#a6e22e>apiLambda</span>);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>favoritesTable</span>.<span style=color:#a6e22e>grantReadWriteData</span>(<span style=color:#a6e22e>apiLambda</span>);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>supportRequestsTable</span>.<span style=color:#a6e22e>grantReadWriteData</span>(<span style=color:#a6e22e>apiLambda</span>);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>notificationsTable</span>.<span style=color:#a6e22e>grantReadWriteData</span>(<span style=color:#a6e22e>apiLambda</span>);
+</span></span><span style=display:flex><span><span style=color:#a6e22e>imagesBucket</span>.<span style=color:#a6e22e>grantReadWrite</span>(<span style=color:#a6e22e>apiLambda</span>);
+</span></span></code></pre></div><p><strong>B. Quản lý người dùng trong Cognito (Full Admin Actions):</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#a6e22e>apiLambda</span>.<span style=color:#a6e22e>addToRolePolicy</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyStatement</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>actions</span><span style=color:#f92672>:</span> [
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminCreateUser&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminSetUserPassword&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminInitiateAuth&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminGetUser&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminAddUserToGroup&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminRemoveUserFromGroup&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminListGroupsForUser&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminUpdateUserAttributes&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminEnableUser&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminDisableUser&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:AdminDeleteUser&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:ListUsers&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;cognito-idp:GlobalSignOut&#34;</span>,
+</span></span><span style=display:flex><span>    ],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>resources</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>userPool</span>.<span style=color:#a6e22e>userPoolArn</span>],
+</span></span><span style=display:flex><span>  })
+</span></span><span style=display:flex><span>);
+</span></span></code></pre></div><p><strong>C. Tích hợp với các dịch vụ khác (SNS, Bedrock, Location):</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Send SMS (OTP)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>apiLambda</span>.<span style=color:#a6e22e>addToRolePolicy</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyStatement</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>actions</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;sns:Publish&#34;</span>],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>resources</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;*&#34;</span>],
+</span></span><span style=display:flex><span>  })
+</span></span><span style=display:flex><span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Invoke AI (Claude 3)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>apiLambda</span>.<span style=color:#a6e22e>addToRolePolicy</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyStatement</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>actions</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;bedrock:InvokeModel&#34;</span>],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>resources</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;arn:aws:bedrock:*::foundation-model/anthropic.claude-3-*&#34;</span>],
+</span></span><span style=display:flex><span>  })
+</span></span><span style=display:flex><span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Access Location Service
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>apiLambda</span>.<span style=color:#a6e22e>addToRolePolicy</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>iam</span>.<span style=color:#a6e22e>PolicyStatement</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>actions</span><span style=color:#f92672>:</span> [
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;geo:SearchPlaceIndexForText&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;geo:GetPlace&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;geo:CalculateRoute&#34;</span>,
+</span></span><span style=display:flex><span>      <span style=color:#e6db74>&#34;geo:SearchPlaceIndexForPosition&#34;</span>,
+</span></span><span style=display:flex><span>    ],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>resources</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>placeIndex</span>.<span style=color:#a6e22e>attrArn</span>, <span style=color:#a6e22e>routeCalculator</span>.<span style=color:#a6e22e>attrArn</span>],
+</span></span><span style=display:flex><span>  })
+</span></span><span style=display:flex><span>);
+</span></span></code></pre></div><h4 id=7-api-gateway-rest-api>7. API Gateway (REST API)</h4><p>Tạo Endpoint công khai để client có thể gọi Lambda function.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>api</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>apigateway</span>.<span style=color:#a6e22e>LambdaRestApi</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;BoardingHouseApi&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>handler</span>: <span style=color:#66d9ef>apiLambda</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>proxy</span>: <span style=color:#66d9ef>true</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>deployOptions</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>stageName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;prod&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>throttlingBurstLimit</span>: <span style=color:#66d9ef>100</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>throttlingRateLimit</span>: <span style=color:#66d9ef>50</span>,
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>defaultCorsPreflightOptions</span><span style=color:#f92672>:</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>allowOrigins</span>: <span style=color:#66d9ef>apigateway.Cors.ALL_ORIGINS</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>allowMethods</span>: <span style=color:#66d9ef>apigateway.Cors.ALL_METHODS</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>allowHeaders</span><span style=color:#f92672>:</span> [<span style=color:#e6db74>&#34;Content-Type&#34;</span>, <span style=color:#e6db74>&#34;Authorization&#34;</span>],
+</span></span><span style=display:flex><span>  },
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>restApiName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;FindNestAPI&#34;</span>,
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><h4 id=8-giám-sát--quan-sát-cloudwatch>8. Giám sát & Quan sát (CloudWatch)</h4><p>Chúng ta triển khai giám sát toàn diện với <strong>CloudWatch Dashboard</strong>, <strong>Alarms</strong>, và <strong>SNS Notifications</strong>.</p><p><strong>A. SNS Alert Topic:</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>alertTopic</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>sns</span>.<span style=color:#a6e22e>Topic</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;AlertTopic&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>topicName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;BoardingHouseAlerts&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>displayName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Smart Boarding House Alerts&#34;</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>alertTopic</span>.<span style=color:#a6e22e>addSubscription</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>snsSubscriptions</span>.<span style=color:#a6e22e>EmailSubscription</span>(<span style=color:#e6db74>&#34;admin@smartboardinghouse.com&#34;</span>)
+</span></span><span style=display:flex><span>);
+</span></span></code></pre></div><p><strong>B. CloudWatch Alarms:</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#75715e>// Lambda Error Alarm
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>lambdaErrorAlarm</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>Alarm</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;LambdaErrorAlarm&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>alarmName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;BoardingHouse-Lambda-Errors&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>metric</span>: <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>Metric</span>({
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>namespace</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;AWS/Lambda&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>metricName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Errors&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dimensionsMap</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>FunctionName</span>: <span style=color:#66d9ef>lambdaFunctionName</span> },
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>statistic</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Sum&#34;</span>,
+</span></span><span style=display:flex><span>  }),
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>threshold</span>: <span style=color:#66d9ef>5</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>evaluationPeriods</span>: <span style=color:#66d9ef>2</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Lambda Duration Alarm
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>lambdaDurationAlarm</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>Alarm</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;LambdaDurationAlarm&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>alarmName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;BoardingHouse-Lambda-Duration&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>metric</span>: <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>Metric</span>({
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>namespace</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;AWS/Lambda&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>metricName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Duration&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dimensionsMap</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>FunctionName</span>: <span style=color:#66d9ef>lambdaFunctionName</span> },
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>statistic</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Average&#34;</span>,
+</span></span><span style=display:flex><span>  }),
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>threshold</span>: <span style=color:#66d9ef>25000</span>, <span style=color:#75715e>// 25 giây
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>  <span style=color:#a6e22e>evaluationPeriods</span>: <span style=color:#66d9ef>3</span>,
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// API Gateway 4xx/5xx Alarms
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>apiGateway4xxAlarm</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>Alarm</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;ApiGateway4xxAlarm&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>alarmName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;BoardingHouse-API-4xx-Errors&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>metric</span>: <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>Metric</span>({
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>namespace</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;AWS/ApiGateway&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>metricName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;4XXError&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>dimensionsMap</span><span style=color:#f92672>:</span> { <span style=color:#a6e22e>ApiName</span>: <span style=color:#66d9ef>apiGatewayName</span> },
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>statistic</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Sum&#34;</span>,
+</span></span><span style=display:flex><span>  }),
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>threshold</span>: <span style=color:#66d9ef>10</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>evaluationPeriods</span>: <span style=color:#66d9ef>2</span>,
+</span></span><span style=display:flex><span>});
+</span></span></code></pre></div><p><strong>C. CloudWatch Dashboard (8 Hàng):</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-typescript data-lang=typescript><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>dashboard</span> <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>Dashboard</span>(<span style=color:#66d9ef>this</span>, <span style=color:#e6db74>&#34;BoardingHouseDashboard&#34;</span>, {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>dashboardName</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;SmartBoardingHouse-Monitoring&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>defaultInterval</span>: <span style=color:#66d9ef>cdk.Duration.hours</span>(<span style=color:#ae81ff>24</span>),
+</span></span><span style=display:flex><span>});
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Row 1: Tổng quan Lambda (Invocations, Errors, Throttles)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#a6e22e>dashboard</span>.<span style=color:#a6e22e>addWidgets</span>(
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>GraphWidget</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Lambda Invocations&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>left</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>lambdaInvocationsMetric</span>],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>width</span>: <span style=color:#66d9ef>8</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>height</span>: <span style=color:#66d9ef>6</span>,
+</span></span><span style=display:flex><span>  }),
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>GraphWidget</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Lambda Errors&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>left</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>lambdaErrorsMetric</span>],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>width</span>: <span style=color:#66d9ef>8</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>height</span>: <span style=color:#66d9ef>6</span>,
+</span></span><span style=display:flex><span>  }),
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>new</span> <span style=color:#a6e22e>cloudwatch</span>.<span style=color:#a6e22e>GraphWidget</span>({
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>title</span><span style=color:#f92672>:</span> <span style=color:#e6db74>&#34;Lambda Throttles&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>left</span><span style=color:#f92672>:</span> [<span style=color:#a6e22e>lambdaThrottlesMetric</span>],
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>width</span>: <span style=color:#66d9ef>8</span>,
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>height</span>: <span style=color:#66d9ef>6</span>,
+</span></span><span style=display:flex><span>  })
+</span></span><span style=display:flex><span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Row 2: Hiệu suất Lambda (Duration, Concurrent Executions)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Row 3: API Gateway (Requests, Latency)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Row 4: Lỗi API Gateway (4XX, 5XX)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Row 5: Metrics DynamoDB (Read/Write Capacity, Errors)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Row 6: Tóm tắt Sức khỏe Hệ thống (Tỷ lệ lỗi, Thời gian phản hồi, Tổng Requests)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Row 7: Sử dụng Token Bedrock AI &amp; Invocations
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Row 8: Tóm tắt Model Bedrock (Tổng Tokens, Invocations, Latency)
+</span></span></span></code></pre></div><p><strong>Tính năng Dashboard:</strong></p><ul><li>📊 <strong>Lambda Metrics</strong>: Invocations, Errors, Throttles, Duration, Concurrency</li><li>🌐 <strong>API Gateway Metrics</strong>: Requests, Latency (Avg & P99), Lỗi 4XX/5XX</li><li>💾 <strong>DynamoDB Metrics</strong>: Read/Write Capacity, User Errors theo bảng</li><li>🤖 <strong>Bedrock AI Metrics</strong>: Token Usage (Input/Output), Invocations, Latency</li><li>📈 <strong>Tóm tắt Sức khỏe Hệ thống</strong>: Tỷ lệ lỗi, Thời gian phản hồi, Tổng Requests (24h)</li><li>🚨 <strong>Cảnh báo Tự động</strong>: Thông báo email qua SNS khi vượt ngưỡng</li></ul><footer class=footline></footer></div></div><div id=navigation><a class="nav nav-prev" href=../../../../vi/5-workshop/5.3-deploybackend/ title="Triển khai Backend"><i class="fa fa-chevron-left"></i></a>
+<a class="nav nav-next" href=../../../../vi/5-workshop/5.3-deploybackend/5.3.2-install-dependencies/ title="Cài đặt Dependencies" style=margin-right:0><i class="fa fa-chevron-right"></i></a></div></section><div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div><script src=../../../../js/clipboard.min.js?1765471937></script><script src=../../../../js/perfect-scrollbar.min.js?1765471937></script><script src=../../../../js/perfect-scrollbar.jquery.min.js?1765471937></script><script src=../../../../js/jquery.sticky.js?1765471937></script><script src=../../../../js/featherlight.min.js?1765471937></script><script src=../../../../js/highlight.pack.js?1765471937></script><script>hljs.initHighlightingOnLoad()</script><script src=../../../../js/modernizr.custom-3.6.0.js?1765471937></script><script src=../../../../js/learn.js?1765471937></script><script src=../../../../js/hugo-learn.js?1765471937></script><link href=../../../../mermaid/mermaid.css?1765471937 rel=stylesheet><script src=../../../../mermaid/mermaid.js?1765471937></script><script>mermaid.initialize({startOnLoad:!0})</script><script>(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,(e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date),(i=t.createElement(n),a=t.getElementsByTagName(n)[0]),i.async=1,i.src=s,a.parentNode.insertBefore(i,a)})(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-158079754-2","auto"),ga("send","pageview")</script></body></html>
